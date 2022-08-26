@@ -28,6 +28,9 @@ export default function Input(props: InputProps) {
     const onChange = (e: h.JSX.TargetedEvent<HTMLInputElement>) => {
         // determine actual input value
         const value = e.currentTarget.value
+
+        console.log(value)
+
         // clear input if clearOnEnter is true
         if (props.clearOnEnter) {
             setValue("")

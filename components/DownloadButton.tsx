@@ -1,7 +1,7 @@
 /** @jsx h */
 import { tw } from '@twind'
 import { h } from 'preact'
-import sortItems from '../utils/sortItems.ts'
+import { itemsToCSV } from '../utils/csv.ts'
 
 
 export interface DownloadButtonProps {
@@ -10,19 +10,12 @@ export interface DownloadButtonProps {
 }
 
 export default function DownloadButton(props: DownloadButtonProps) {
-    const items = sortItems(props.items)
-
-    const table = [
-        ["Begriffe", ...items],
-    ]
-
-    const csv = table.map(row => row.join('\n')).join("\n")
-
-    const content = `data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`
-
     if (props.items.length == 0) {
         return null
     }
+
+    const csv = itemsToCSV(props.items)
+    const content = `data:text/csv;charset=utf-8,${encodeURIComponent(csv)}`
 
     return (
         <a className={tw`button text-blue-500 hover:text-blue-700 h-12 w-12 flex-none border-blue-500 rounded-lg focus:ring-blue-500 focus:border-blue-500`}
