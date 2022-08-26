@@ -1,0 +1,28 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: nlp-abc-list
+spec:
+  dnsNames:
+    - abc.nlp.weidenfeld.info
+  secretName: nlp-abc-list
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: nlp-abc-list
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`abc.nlp.weidenfeld.info`)
+      kind: Rule
+      services:
+        - name: nlp-abc-list
+          port: http
+  tls:
+    secretName: nlp-abc-list

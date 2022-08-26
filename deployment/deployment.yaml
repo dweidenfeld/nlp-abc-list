@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nlp-abc-list
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nlp-abc-list
+  template:
+    metadata:
+      labels:
+        app: nlp-abc-list
+    spec:
+      containers:
+        - name: nlp-abc-list
+          image: dweidenfeld/nlp-abc-list
+          ports:
+            - name: http
+              containerPort: 8000
