@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nlp-abc-list
+spec:
+  ports:
+    - name: http
+      targetPort: http
+      port: 80
+  selector:
+    app: nlp-abc-list
