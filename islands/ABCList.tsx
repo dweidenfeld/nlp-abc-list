@@ -6,6 +6,7 @@ import DownloadButton from '../components/DownloadButton.tsx'
 import Input from '../components/Input.tsx'
 import ListInput from '../components/ListInput.tsx'
 import UploadButton from '../components/UploadButton.tsx'
+import sortItems from '../utils/sortItems.ts'
 
 export interface ABCListProps {
     items?: string[];
@@ -31,7 +32,7 @@ export default function ABCList(props: ABCListProps) {
             <div className={tw`p-1.5`}/>
             <div className={tw`flex flex-wrap items-center justify-center space-x-2.5`}>
                 <UploadButton onUpload={addItems}/>
-                <label className={tw`border-2 border-blue-500 rounded-full w-10 h-10 flex items-center justify-center font-bold`}>{items.length}</label>
+                <label className={tw`border-2 border-blue-500 rounded-full w-10 h-10 flex items-center justify-center font-bold`}>{sortItems(items).length}</label>
                 <DownloadButton items={items}/>
             </div>
             <ListInput key={items.length} items={items} onUpdate={setItems}/>
