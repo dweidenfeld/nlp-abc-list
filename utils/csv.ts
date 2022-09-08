@@ -1,4 +1,5 @@
 import sortItems from "./sortItems.ts"
+import CSV from "https://deno.land/x/deno_csv_string@v0.0.2/mod.js";
 
 export function itemsToTable(items: string[]): string[][] {
     // sort items
@@ -35,14 +36,28 @@ export function itemsToTable(items: string[]): string[][] {
     return table
 }
 
+export function tableToItems(table: string[][]): string[] {
+    // get all items from table
+    const items = table.filter((_, i) => i > 0)
+        .map(row => row[0])
+        .filter(item => item !== "")
+
+    // sort items
+    return sortItems(items)
+}
+
 export function itemsToCSV(items: string[]): string {
+    // format items to table
     const table = itemsToTable(items)
-    return table.map(row => row.join(";")).join("\n")
+
+    // serialize csv
+    return CSV.stringify(table)
 }
 
 export function csvToItems(csv: string): string[] {
-    return csv.split("\n")
-        .filter((_, index) => index > 0)
-        .map(row => row.split(";")[0])
-        .filter((item) => item.length > 0)
+    // deserialize csv
+    const table = CSV.parse(csv)
+
+    // format table to items
+    return tableToItems(table)
 }

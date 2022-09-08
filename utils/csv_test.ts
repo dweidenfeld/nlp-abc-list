@@ -1,6 +1,7 @@
 import { assertEquals } from "https://deno.land/std@0.153.0/testing/asserts.ts";
 
-import { csvToItems, itemsToCSV, itemsToTable } from './csv.ts'
+import { csvToItems, itemsToCSV, itemsToTable, tableToItems } from './csv.ts'
+import sortItems from './sortItems.ts'
 
 Deno.test("itemsToTable min", () => {
     const table = itemsToTable(["VAKOG", "Visual", "Audio", "Kinesthetic", "Olfactory", "Gustatory"])
@@ -78,37 +79,47 @@ Deno.test("itemsToTable max", () => {
     ], table)
 })
 
+Deno.test("tableToItems", () => {
+    const items = sortItems(["VAKOG", "Visual", "Audio", "Kinesthetic", "Olfactory", "Gustatory"])
+
+    const table = itemsToTable(items)
+    const itemsFromTable = tableToItems(table)
+
+    assertEquals(items, itemsFromTable)
+})
+
 Deno.test("itemsToCSV", () => {
     const csv = itemsToCSV(["a", "b", "c"])
 
     assertEquals(
-`Begriff;Buchstabe;Zuordnung
-a;A;a
-b;B;b
-c;C;c
-;D;
-;E;
-;F;
-;G;
-;H;
-;I;
-;J;
-;K;
-;L;
-;M;
-;N;
-;O;
-;P;
-;Q;
-;R;
-;S;
-;T;
-;U;
-;V;
-;W;
-;X;
-;Y;
-;Z;`, csv)
+`Begriff,Buchstabe,Zuordnung\r
+a,A,a\r
+b,B,b\r
+c,C,c\r
+,D,\r
+,E,\r
+,F,\r
+,G,\r
+,H,\r
+,I,\r
+,J,\r
+,K,\r
+,L,\r
+,M,\r
+,N,\r
+,O,\r
+,P,\r
+,Q,\r
+,R,\r
+,S,\r
+,T,\r
+,U,\r
+,V,\r
+,W,\r
+,X,\r
+,Y,\r
+,Z,\r
+`, csv)
 })
 
 Deno.test("csvToItems", () => {
